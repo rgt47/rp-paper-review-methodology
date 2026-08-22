@@ -8,3 +8,7 @@
 ^Makefile$
 ^Dockerfile$
 ^\.dockerignore$
+^figures$
+^data$
+^media$
+^index\.qmd$
