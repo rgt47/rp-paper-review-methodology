@@ -110,7 +110,7 @@ on rather than invents from scratch.
    verification of results and citations, cross-section integration,
    research-integrity and disclosure safety) and what each phase is
    for.
-2. Catalogue the AI-generated manuscript patterns that deserve
+2. Catalog the AI-generated manuscript patterns that deserve
    specific scrutiny during the section-level pass.
 3. Summarize what published journal, publisher, and funder policy
    actually requires for AI-assisted manuscripts, since this is a
@@ -501,7 +501,7 @@ actually costs if it ships unresolved.
   restate the section's claim and its evidentiary basis from memory,
   it has not actually been reviewed.
 
-# Lessons Learnt
+# Lessons Learned
 
 **Conceptual understanding:**
 
