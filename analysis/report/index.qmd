@@ -6,7 +6,7 @@ categories: [writing, research-papers, academic-publishing, ai-assisted-writing,
 description: "A methodological framework for reviewing research manuscripts drafted with generative-AI assistance, structured as five review phases plus an explicit test for whether the human author has earned authorship of the result, grounded in published journal and publisher AI-disclosure policy."
 image: "media/images/hero.jpg"
 document-type: "blog"
-draft: true
+draft: false
 execute:
   echo: true
   warning: false
