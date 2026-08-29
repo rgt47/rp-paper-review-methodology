@@ -59,7 +59,7 @@ writing pairs a human researcher, who designs the study, runs or
 directs the analysis, and sets the argument, with an AI assistant
 that drafts prose, summarizes literature, or helps structure results.
 The arrangement compresses drafting time considerably, but it
-collides with a settled point of publishing policy: every major
+collides with a settled point of publishing policy. Every major
 journal body that has published a position on the question agrees
 that an AI tool cannot be an author, because authorship requires
 accountability, and accountability cannot attach to a tool. The named
@@ -133,15 +133,13 @@ it does not replace a journal's own editorial and peer-review
 process, an institution's research-integrity office, or a
 statistical co-author's sign-off; it sits alongside all three.
 
-A thorough review in this context serves five purposes: comprehension
-(the author can explain every claim and can trace every result back
-to its source), correctness (the reported results match what the
-analysis actually produced), argumentative soundness (the discussion
-follows from the results rather than overstating them), consistency
-(terminology, notation, and reported figures agree across the
-abstract, body, and tables), and compliance (the manuscript meets the
-target journal's specific disclosure requirements for AI-assisted
-work, not a generic assumption about what disclosure means).
+A thorough review in this context serves five purposes:
+
+1. **Comprehension.** The author can explain every claim and can trace every result back to its source.
+2. **Correctness.** The reported results match what the analysis actually produced.
+3. **Argumentative soundness.** The discussion follows from the results rather than overstating them.
+4. **Consistency.** Terminology, notation, and reported figures agree across the abstract, body, and tables.
+5. **Compliance.** The manuscript meets the target journal's specific disclosure requirements for AI-assisted work, not a generic assumption about what disclosure means.
 
 # Prerequisites
 
@@ -281,15 +279,16 @@ is consistent with the main text's claims about it.
 
 Examine the manuscript for the exposure classes specific to
 publication under a researcher's name. Confirm no AI tool is listed
-as an author or co-author; every major journal body that has
-published a position on this (ICMJE, COPE, WAME, and the policies of
-Nature/Springer Nature, Science/AAAS, JAMA Network, Elsevier, and
-PLOS) agrees on this point without exception, on the grounds that
-authorship requires accountability that an AI tool cannot hold.
+as an author or co-author. Every major journal body that has
+published a position on this, including ICMJE, COPE, WAME, and the
+policies of Nature/Springer Nature, Science/AAAS, JAMA Network,
+Elsevier, and PLOS, agrees on this point without exception, on the
+grounds that authorship requires accountability that an AI tool
+cannot hold.
 Confirm the AI-disclosure statement is present, correctly located per
 the target journal's specific policy, and accurately describes what
-the tool was used for; several venues (Science and JAMA Network among
-them) go further and require the actual prompts used to be disclosed
+the tool was used for. Several venues, Science and JAMA Network among
+them, go further and require the actual prompts used to be disclosed
 when AI contributed to the manuscript's substantive content, not only
 its prose. Confirm no data were fabricated or embellished by an AI
 tool at any stage, since this is treated as a bright line by every
