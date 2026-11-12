@@ -1,0 +1,100 @@
+# zzcollab blog-render.yml v0.3.0 (zzcollab 988aa73)
+#
+# The single CI workflow for the blog archetype (one post per repository).
+# Builds the post's Docker image, restores renv.lock inside it, renders
+# analysis/report/index.qmd to HTML, and checks that the output is non-empty.
+# Blog posts carry no r-package.yml or render-report.yml: a post has no
+# package code to check, and this workflow is its render gate.
+#
+name: Render Blog Post
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+    paths:
+      - 'analysis/report/**'
+      - 'renv.lock'
+      - 'Dockerfile'
+      - '.github/workflows/blog-render.yml'
+  pull_request:
+    branches: [main, master]
+    paths:
+      - 'analysis/report/**'
+      - 'renv.lock'
+      - 'Dockerfile'
+      - '.github/workflows/blog-render.yml'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  render-blog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Build Docker image
+        run: docker build -t blog-env .
+
+      - name: Restore R packages
+        timeout-minutes: 30
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/home/analyst/project \
+            -w /home/analyst/project \
+            --user root \
+            blog-env bash -c 'chown -R analyst:analyst /home/analyst/project && mkdir -p /home/analyst/project/renv && chown -R analyst:analyst /home/analyst/project/renv && su - analyst -c "cd /home/analyst/project && Rscript -e \"options(warn=1); renv::restore(prompt=FALSE)\"" 2>&1'
+
+      - name: Render Quarto post
+        timeout-minutes: 30
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/home/analyst/project \
+            -w /home/analyst/project \
+            --user root \
+            blog-env bash -c 'chown -R analyst:analyst /home/analyst/project && su - analyst -c "cd /home/analyst/project && quarto render analysis/report/index.qmd --to html 2>&1" || { echo "Rendering failed - check code and image paths"; exit 1; }'
+
+      - name: Verify rendered output
+        run: |
+          out=analysis/report/index.html
+          if [ ! -f "$out" ]; then
+            echo "::error::Rendered HTML not found at $out"
+            exit 1
+          fi
+          size=$(stat -c%s "$out")
+          if [ "$size" -le 1000 ]; then
+            echo "::error::Rendered HTML is too small ($size bytes)"
+            exit 1
+          fi
+          echo "Blog post rendered ($size bytes)"
+
+      - name: Upload rendered post
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: rendered-blog-post
+          path: analysis/report/index.html
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Summary
+        if: always()
+        run: |
+          if [ "${{ job.status }}" = success ]; then
+            echo "## Blog post rendered" >> "$GITHUB_STEP_SUMMARY"
+          else
+            {
+              echo "## Blog post render failed"
+              echo ""
+              echo "Reproduce locally: \`make docker-run\`, then"
+              echo "\`cd analysis/report && quarto render index.qmd --to html\`."
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
